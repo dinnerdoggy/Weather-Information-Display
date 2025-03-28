@@ -1,14 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import WeatherCard from '../components/weatherCard';
 import getWeather from '../api/weatherData';
+import WeatherCard from '../components/weatherCard';
 
 function Home() {
-  const [weather, setWeather] = useState([]);
+  const [weather, setWeather] = useState({});
 
   useEffect(() => {
-    getWeather().then(setWeather);
+    getWeather().then((data) => {
+      setWeather(data);
+    });
   }, []);
 
   return (
@@ -22,7 +24,7 @@ function Home() {
       }}
     >
       <h1>Hello! </h1>
-      <WeatherCard key={weather.current.last_updated_epoch} weatherObj={weather} onUpdate={getWeather().then(setWeather)} />
+      <WeatherCard param={weather} />
     </div>
   );
 }

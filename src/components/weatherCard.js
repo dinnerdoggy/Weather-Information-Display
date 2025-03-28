@@ -1,25 +1,29 @@
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
+import Card from 'react-bootstrap/Card';
 
-function WeatherCard({ weatherObj }) {
+function WeatherCard({ param }) {
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
       <Card.Body>
-        <Card.Title>{weatherObj.location.name}</Card.Title>
-        <Card.Text>
-          {weatherObj.current.temp_f}
-          {weatherObj.current.humidity}
-        </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        {param.location && param.current ? (
+          <>
+            <Card.Title>{param.location.name}</Card.Title>
+            <Card.Text>
+              Temp: {param.current.temp_f}°F
+              <br />
+              Humidity: {param.current.humidity}%
+            </Card.Text>
+          </>
+        ) : (
+          <Card.Text>Loading weather...</Card.Text>
+        )}
       </Card.Body>
     </Card>
   );
 }
 
 WeatherCard.propTypes = {
-  weatherObj: PropTypes.shape({
+  param: PropTypes.shape({
     location: PropTypes.shape({
       name: PropTypes.string,
     }),
