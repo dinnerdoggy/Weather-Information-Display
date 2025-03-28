@@ -1,13 +1,15 @@
 'use client';
 
- // any component that uses useAuth needs this because if a component directly imports useAuth, it needs to be a client component since useAuth uses React hooks.
-
-import { Button } from 'react-bootstrap';
-import { signOut } from '@/utils/auth'; // anything in the src dir, you can use the @ instead of relative paths
-import { useAuth } from '@/utils/context/authContext';
+import { useEffect, useState } from 'react';
+import WeatherCard from '../components/weatherCard';
+import getWeather from '../api/weatherData';
 
 function Home() {
-  const { user } = useAuth();
+  const [weather, setWeather] = useState([]);
+
+  useEffect(() => {
+    getWeather().then(setWeather);
+  }, []);
 
   return (
     <div
@@ -19,11 +21,8 @@ function Home() {
         margin: '0 auto',
       }}
     >
-      <h1>Hello {user.displayName}! </h1>
-      <p>Click the button below to logout!</p>
-      <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
-        Sign Out
-      </Button>
+      <h1>Hello! </h1>
+      <WeatherCard key={weather.current.last_updated_epoch} weatherObj={weather} onUpdate={getWeather().then(setWeather)} />
     </div>
   );
 }
