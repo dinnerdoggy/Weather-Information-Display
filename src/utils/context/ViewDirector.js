@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import NavBar from '@/components/NavBar';
+// import NavBar from '@/components/NavBar';
 
 function ViewDirectorBasedOnUserAuthStatus({ children }) {
   return (
     <>
-      <NavBar /> {/* NavBar only visible if user is logged in and is in every view */}
+      {/* <NavBar /> NavBar only visible if user is logged in and is in every view */}
       {children}
     </>
   );
